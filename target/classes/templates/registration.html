@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<head xmlns:hf="http://www.w3.org/1999/xhtml">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+</head>
+<body class="container">
+<h2 align="center">Регистрация в CRM</h2>
+<div align="center">
+    <form class="col" action="/registration" method="post">
+        <input class="row m-3" type="email" name="email" placeholder="Почта">
+        <input class="row m-3" type="text" name="name" placeholder="Имя">
+        <input class="row m-3" type="tel" name="phone" placeholder="Телефон">
+        <span>
+            <select name="position">
+            <option value="worker">Рабочий</option>
+            <option value="manager">Менеджер</option>
+        </select>
+        </span>
+        <input class="row m-3" type="text" name="nickname" placeholder="Позывной">
+        <input class="row mb-3" type="password" name="password" placeholder="Введите пароль">
+        <input class="row btn btn-primary" type="submit">
+    </form>
+    <p th:text="${notification}"/>
+</div>
+
+</body>
+</html>
