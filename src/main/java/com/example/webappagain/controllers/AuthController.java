@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -35,12 +36,15 @@ public class AuthController {
            return "registration";
        }
        else {
-           if(employee.getPosition() == "worker")
-               employee.setRoles(Collections.singleton(Role.worker));
-           else
-               employee.setRoles(Collections.singleton(Role.manager));
+           if(employee.getPosition().equals("worker")) {
+               employee.setRoles(Collections.singleton(Role.WORKER));
+           }
+           else {
+               employee.setRoles(Collections.singleton(Role.MANAGER));
+           }
            employee.setPassword(passwordEncoder.encode(employee.getPassword()));
            eRepo.save(employee);
+
        }
        return "redirect:/login";
    }

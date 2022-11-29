@@ -59,7 +59,7 @@ public class Employee implements UserDetails {
     }
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", schema = "little_company",
+    @CollectionTable(name = "user_role", schema = "little_company",foreignKey = @ForeignKey(name ="employeeId"),
             joinColumns = @JoinColumn(name = "employeeId"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
