@@ -8,19 +8,20 @@
 <h2 align="center">Регистрация в CRM</h2>
 <div align="center">
     <form class="col" action="/registration" method="post">
-        <input class="row m-3" type="email" name="email" placeholder="Почта">
-        <input class="row m-3" type="text" name="name" placeholder="Имя">
-        <input class="row m-3" type="tel" name="phone" placeholder="Телефон">
+        <input class="row m-3" type="email" name="email" placeholder="Почта" required>
+        <input class="row m-3" type="text" name="name" placeholder="Имя" required>
+        <input class="row m-3" type="tel" name="phone" placeholder="Телефон" required>
         <span>
-            <select name="position">
+            <select name="position" required>
             <option value="worker">Рабочий</option>
             <option value="manager">Менеджер</option>
         </select>
         </span>
-        <input class="row m-3" type="text" name="nickname" placeholder="Позывной">
-        <input class="row mb-3" type="password" name="password" placeholder="Введите пароль">
+        <input class="row m-3" type="text" name="nickname" placeholder="Позывной" required>
+        <input class="row mb-3" type="password" name="password" placeholder="Введите пароль" required>
         <input class="row btn btn-primary" type="submit">
     </form>
+
     <p th:text="${notification}"/>
 </div>
 

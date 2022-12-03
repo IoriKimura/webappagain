@@ -37,6 +37,9 @@ public class Employee implements UserDetails {
         return email;
     }
 
+    public boolean isManager(){
+        return roles.contains(Role.MANAGER);
+    }
 
     @Override
     public boolean isAccountNonExpired() {
