@@ -7,6 +7,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -18,10 +20,20 @@ public class ClientsController{
 
     @GetMapping("/clients")
     public String show(Model model){
-        this.cRepo = cRepo;
-        List<Clients> clients = cRepo.findAll();
+        Iterable<Clients> clients = cRepo.findAll();
         model.addAttribute("clients", clients);
 
+        return "clients";
+    }
+
+    @PostMapping("filter")
+    public String filter(@RequestParam String filter, Model model){
+        Iterable<Clients> clients;
+        if(filter != null && !filter.isEmpty())
+            clients = cRepo.findByName(filter);
+        else
+            clients = cRepo.findAll();
+        model.addAttribute("clients", clients);
         return "clients";
     }
 }

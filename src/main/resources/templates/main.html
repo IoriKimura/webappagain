@@ -12,7 +12,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item" sec:authorize="hasAuthority('MANAGER')">
-                        <a class="nav-link" href="/users">Работники</a>
+                        <a class="nav-link" href="/workers">Работники</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/tasks">Задачи</a>
@@ -27,10 +27,37 @@
                 </form>
 
                 <form class="col" action="/logout" method="POST">
-                    <input class="btn btn-secondary" style="background-color: darkblue" type="submit" value="Sign Out">
+                    <input class="btn btn-secondary" style="background-color: darkblue" type="submit" value="Выход">
                 </form>
             </div>
         </div>
     </nav>
+    <div class="container" align="center">
+        <form>
+            <h1 class="display-2">Привет</h1>
+            <p class="lead">
+                Вы попали на главную страницу нашего CRM <br>
+                <br>
+            </p>
+            <div  sec:authorize="hasAuthority('MANAGER')">
+                <h3 class="display-5">Вы Менеджер</h3>
+                <p class="lead">
+                    Вы можете<br>
+                    Просматривать клиентов компании<br>
+                    Составлять задачи и просматривать их<br>
+                    Просматривать работников компании<br>
+                    А также составлять отчёты!
+                </p>
+            </div>
+            <div  sec:authorize="hasAuthority('WORKER')">
+                <h3 class="display-5">Вы Работник</h3>
+                <p class="lead">
+                    Вы можете<br>
+                    Просматривать свои задачи<br>
+                    И пока что всё...
+                </p>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

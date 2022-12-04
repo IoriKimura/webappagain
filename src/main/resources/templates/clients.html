@@ -8,11 +8,11 @@
 <body>
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid" align="right">
-      <h2 class="navbar-brand">CRM</h2>
+      <a class="navbar-brand">CRM</a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item" sec:authorize="hasAuthority('MANAGER')">
-            <a class="nav-link" href="/users">Работники</a>
+            <a class="nav-link" href="/workers">Работники</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/tasks">Задачи</a>
@@ -27,13 +27,17 @@
         </form>
 
         <form class="col" action="/logout" method="POST">
-          <input class="btn btn-secondary" style="background-color: darkblue" type="submit" value="Sign Out">
+          <input class="btn btn-secondary" style="background-color: darkblue" type="submit" value="Выход">
         </form>
       </div>
     </div>
   </nav>
-  <p align="center" class="h3 m-4">Клиенты нашей компании!</p>
+  <p align="center" class="display-4 m-3">Клиенты нашей компании!</p>
   <div class="container">
+    <form class="col" action="filter" method="POST" align="center">
+      <input class="form-control mb-2" type="text" name="filter" placeholder="Введите имя компании или человека"></input>
+      <button type="submit" class="btn btn-primary mb-1">Найти</button>
+    </form>
     <form>
       <table class="table mb-3" align="center">
         <thead class="table-dark">

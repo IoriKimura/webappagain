@@ -5,12 +5,12 @@
     <title>Вход в CRM</title>
 </head>
 <body class="container bg-light">
-    <h2 align="center">Войдите в CRM</h2>
+    <h2 align="center" class="display-4">Войдите в CRM</h2>
     <div align="center">
         <form class="col" action="/login" method="POST">
-            <input class="row m-3" type="email" name="email" placeholder="Почта">
-            <input class="row mb-3" type="password" name="password" placeholder="Пароль">
-            <input class="row btn btn-primary" type="submit" value="Sign In">
+            <input class="row m-3" type="email" name="email" placeholder="Почта" required>
+            <input class="row mb-3" type="password" name="password" placeholder="Пароль" required>
+            <input class="row btn btn-primary" type="submit" value="Войти">
             <h4><a href="/registration">Зарегистрироваться</a></h4>
         </form>
     </div>
