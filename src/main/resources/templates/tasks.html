@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head xmlns:hf="http://www.w3.org/1999/xhtml">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Наши клиенты</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid" align="right">
+        <a class="navbar-brand">CRM</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item" sec:authorize="hasAuthority('MANAGER')">
+                    <a class="nav-link" href="/workers">Работники</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/tasks">Задачи</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAuthority('MANAGER')">
+                    <a class="nav-link" href="/clients">Клиенты</a>
+                </li>
+            </ul>
+            <div class="nab-item" align="right">
+                <a th:text="${#authentication.getName()}"></a>
+            </div>
+            </form>
+
+            <form class="col" action="/logout" method="POST">
+                <input class="btn btn-secondary" style="background-color: darkblue" type="submit" value="Выход">
+            </form>
+        </div>
+    </div>
+</nav>
+<p align="center" class="display-4 m-3">Ваши задачи</p>
+<div class="container-fluid">
+    <form>
+        <table class="table mb-3" align="center">
+            <thead class="table-dark">
+            <tr>
+                <th scope="col">Номер задачи</th>
+                <th scope="col">Номер заказчика</th>
+                <th scope="col">Номер автора</th>
+                <th scope="col">Номер исполнителя</th>
+                <th scope="col">Цель</th>
+                <th scope="col">Приоритет</th>
+                <th scope="col">Дата создания</th>
+                <th scope="col">Дедлайн</th>
+                <th scope="col">Факт выполнения</th>
+
+            </tr>
+            </thead>
+            <tbody class="table-group-divider" >
+            <tr th:each="task: ${tasks}">
+                <td th:text="${task.getTask_id()}"></td>
+                <td th:text="${task.getCustomer_id()}" />
+                <td th:text="${task.getAuthor_id()}"></td>
+                <td th:text="${task.getExecutor_id()}"></td>
+                <td th:text="${task.getGoal()}"></td>
+                <td th:text="${task.getPriority()}"></td>
+                <td th:text="${task.getCreation()}"></td>
+                <td th:text="${task.getDeadline()}"></td>
+                <td th:text="${task.getFinalTime()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+<p class="display-3" th:text="${notification}" align="center"/>
+</body>
+</html>

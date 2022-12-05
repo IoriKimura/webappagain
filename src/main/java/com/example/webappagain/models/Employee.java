@@ -25,7 +25,6 @@ public class Employee implements UserDetails {
     private String position;
     private String nickname;
     private String password;
-    private String salt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
