@@ -27,15 +27,4 @@ public class WorkerController {
         model.addAttribute("workers", employee);
         return "workers";
     }
-
-//    @PostMapping("filter")
-//    public String filter(@RequestParam String filter, Model model){
-//        Iterable<Clients> clients;
-//        if(filter != null && !filter.isEmpty())
-//            clients = cRepo.findByName(filter);
-//        else
-//            clients = cRepo.findAll();
-//        model.addAttribute("clients", clients);
-//        return "clients";
-//    }
 }
