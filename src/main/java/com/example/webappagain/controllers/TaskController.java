@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
 @Controller
 @PreAuthorize("hasAnyAuthority('MANAGER', 'WORKER')")
 public class TaskController {
@@ -31,20 +33,19 @@ public class TaskController {
         this.auth = auth;
         String workerEmail = auth.getName();
         Employee worker = eRepo.findByEmail(workerEmail);
-        Iterable<Tasks> workerTasks = null;
+        List<Tasks> workerTasks = null;
 
-        if (auth.getAuthorities().contains(Role.MANAGER)) {
+        if(auth.getAuthorities().contains(Role.MANAGER)) {
             workerTasks = tRepo.findByAuthor(worker.getEmployeeId());
-            model.addAttribute("tasks", workerTasks);
-            return "tasks";
 
         }
-        else if(auth.getAuthorities().contains(Role.WORKER)){
+        else {
             workerTasks = tRepo.findByExecutor(worker.getEmployeeId());
-            model.addAttribute("tasks", workerTasks);
-            return "tasks";
         }
-        model.addAttribute("notification", "Ура, никаких задач пока что нет!");
+        if(workerTasks.isEmpty())
+            model.addAttribute("notification", "Ура, никаких задач пока что нет!");
+        else
+            model.addAttribute("tasks", workerTasks);
         return "tasks";
     }
 }
