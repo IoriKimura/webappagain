@@ -37,7 +37,7 @@
     <form>
         <table class="table mb-3" align="center">
             <thead class="table-dark">
-            <tr>
+            <tr align="center">
                 <th scope="col">Имя сотрудника</th>
                 <th scope="col">Номер телефона</th>
                 <th scope="col">E-Mail
@@ -46,7 +46,7 @@
             </tr>
             </thead>
             <tbody class="table-group-divider" >
-            <tr th:each="worker: ${workers}">
+            <tr th:each="worker: ${workers}" align="center">
                 <td th:text="${worker.getName()}"></td>
                 <td th:text="${worker.getPhone()}" />
                 <td th:text="${worker.getEmail()}"></td>

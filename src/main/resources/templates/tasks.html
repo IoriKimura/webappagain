@@ -33,34 +33,44 @@
     </div>
 </nav>
 <p align="center" class="display-4 m-3">Ваши задачи</p>
+<div class="alert alert-danger" role="alert" th:if="${alert}" th:text="${alert}" align="center">
+</div>
 <div class="container-fluid">
+    <form class="row g-3" action="complete" method="POST">
+        <div class="col-auto">
+            <input type="text" class="form-control" name="taskID" placeholder="Введите номер задачи">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Завершить</button>
+        </div>
+    </form>
     <form>
         <table class="table mb-3" align="center">
             <thead class="table-dark">
-            <tr>
+            <tr align="center">
                 <th scope="col">Номер задачи</th>
                 <th scope="col">Номер заказчика</th>
                 <th scope="col">Номер автора</th>
                 <th scope="col">Номер исполнителя</th>
                 <th scope="col">Цель</th>
                 <th scope="col">Приоритет</th>
-                <th scope="col">Дата создания</th>
+                <th scope="col">Создано</th>
                 <th scope="col">Дедлайн</th>
-                <th scope="col">Факт выполнения</th>
-
+                <th scope="col">Выполнено</th>
             </tr>
             </thead>
             <tbody class="table-group-divider" >
-            <tr th:each="task: ${tasks}">
+            <tr th:each="task: ${tasks}" align="center">
                 <td th:text="${task.getTask_id()}"></td>
-                <td th:text="${task.getCustomer_id()}" />
+                <td th:text="${task.getCustomer_id()}"></td>
                 <td th:text="${task.getAuthor_id()}"></td>
                 <td th:text="${task.getExecutor_id()}"></td>
                 <td th:text="${task.getGoal()}"></td>
                 <td th:text="${task.getPriority()}"></td>
                 <td th:text="${task.getCreation()}"></td>
                 <td th:text="${task.getDeadline()}"></td>
-                <td th:text="${task.getFinalTime()}"></td>
+                <td th:if="${task.getFinaltime() == null}">Не выполнено</td>
+                <td th:text="${task.getFinaltime()}"></td>
             </tr>
             </tbody>
         </table>

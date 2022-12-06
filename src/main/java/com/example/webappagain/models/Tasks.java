@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
 
@@ -25,5 +24,5 @@ public class Tasks {
     private String priority;
     private Timestamp creation;
     private Timestamp deadline;
-    private Timestamp finalTime;
+    private Timestamp finaltime;
 }
