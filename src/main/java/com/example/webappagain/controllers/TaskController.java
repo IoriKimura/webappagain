@@ -7,6 +7,7 @@ import com.example.webappagain.models.Tasks;
 import com.example.webappagain.repository.EmployeeRepo;
 import com.example.webappagain.repository.TasksRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -82,5 +87,51 @@ public class TaskController {
         else
             model.addAttribute("tasks", workerTasks);
         return "tasks";
+    }
+
+    @GetMapping("editing")
+    @PreAuthorize("hasAuthority('MANAGER')")
+    public String edit(Model model, Long taskID, Authentication auth){
+        if(taskID == null) {
+            return "redirect:/tasks";
+        }
+        this.auth = auth;
+        String workerEmail = auth.getName();
+        Employee worker = eRepo.findByEmail(workerEmail);
+        Tasks task = tRepo.findByTaskIDAuthorID(taskID, worker.getEmployeeId());
+        if(task == null) {
+            return "redirect:/tasks";
+        }
+        model.addAttribute("task", task);
+        return "editing";
+    }
+
+    @PostMapping("saved")
+    @PreAuthorize("hasAuthority('MANAGER')")
+    public String saving(Model model, Long task_id,
+                          Long customer_id, Long author_id,
+                          Long executor_id,
+                          String goal,
+                          String priority,
+                         String deadline,
+                         String finaltime, Authentication auth){
+        this.auth = auth;
+        if(customer_id == null)
+            return "redirect:/tasks";
+        String workerEmail = auth.getName();
+        Employee worker = eRepo.findByEmail(workerEmail);
+        Tasks taskFromDb = tRepo.findByTaskIDAuthorID(task_id, worker.getEmployeeId());
+        taskFromDb.setCustomer_id(customer_id);
+        taskFromDb.setAuthor_id(author_id);
+        taskFromDb.setExecutor_id(executor_id);
+        taskFromDb.setGoal(goal);
+        taskFromDb.setPriority(priority);
+        if(!deadline.isEmpty()) {
+            taskFromDb.setDeadline(Timestamp.valueOf(deadline.replace('T', ' ') + ":00"));
+        }
+        if(!finaltime.isEmpty())
+            taskFromDb.setFinaltime(Timestamp.valueOf(finaltime.replace('T', ' ') + "00"));
+        tRepo.save(taskFromDb);
+        return "redirect:/tasks";
     }
 }

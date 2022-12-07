@@ -22,7 +22,8 @@
         <input class="row btn btn-primary" type="submit">
     </form>
 
-    <p th:text="${notification}"/>
+    <div class="alert alert-danger" role="alert" th:if="${notification}" th:text="${notification}" align="center">
+    </div>
 </div>
 
 </body>

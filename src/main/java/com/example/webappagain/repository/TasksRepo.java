@@ -16,4 +16,8 @@ public interface TasksRepo extends JpaRepository<Tasks, Long> {
     @Query("SELECT task FROM Tasks task WHERE task.task_id = :taskID" +
             " AND task.executor_id = :workerId AND task.finaltime is null")
     Tasks findTaskByTaskIDExecutorID(Long taskID, Long workerId);
+
+    @Query("SELECT task FROM Tasks task WHERE task.task_id = :taskID AND task.author_id = :authorID" +
+            " AND task.finaltime is null")
+    Tasks findByTaskIDAuthorID(Long taskID, Long authorID);
 }

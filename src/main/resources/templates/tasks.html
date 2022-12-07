@@ -36,12 +36,20 @@
 <div class="alert alert-danger" role="alert" th:if="${alert}" th:text="${alert}" align="center">
 </div>
 <div class="container-fluid">
-    <form class="row g-3" action="complete" method="POST">
+    <form class="row g-3" action="complete" method="POST" sec:authorize="hasAuthority('WORKER')">
         <div class="col-auto">
             <input type="text" class="form-control" name="taskID" placeholder="Введите номер задачи">
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-primary mb-3">Завершить</button>
+        </div>
+    </form>
+    <form class="row g-3" action="editing" method="GET" sec:authorize="hasAuthority('MANAGER')">
+        <div class="col-auto">
+            <input type="text" class="form-control" name="taskID" placeholder="Введите номер задачи">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Редактировать</button>
         </div>
     </form>
     <form>
