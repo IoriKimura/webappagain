@@ -97,7 +97,7 @@ public class TaskController {
         String workerEmail = auth.getName();
         Employee worker = eRepo.findByEmail(workerEmail);
         Tasks task = tRepo.findByTaskIDAuthorID(taskID, worker.getEmployeeId());
-        Contracts contract = cRepo.findByTaskId(task.getTask_id());
+        Contracts contract = cRepo.findByTaskId(taskID);
         if(task == null) {
             return "redirect:/tasks";
         }
