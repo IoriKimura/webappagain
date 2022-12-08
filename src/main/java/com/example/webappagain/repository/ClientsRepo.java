@@ -1,8 +1,6 @@
 package com.example.webappagain.repository;
+
 import com.example.webappagain.models.Clients;
-import com.example.webappagain.models.Employee;
-import jakarta.persistence.Index;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 

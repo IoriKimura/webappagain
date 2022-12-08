@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head xmlns:hf="http://www.w3.org/1999/xhtml">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>Новое задание</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid" align="right">
+    <a class="navbar-brand" href="/">CRM</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item" sec:authorize="hasAuthority('MANAGER')">
+          <a class="nav-link" href="/workers">Работники</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/tasks">Задачи</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasAuthority('MANAGER')">
+          <a class="nav-link" href="/clients" action="/clients" method="GET">Клиенты</a>
+        </li>
+      </ul>
+      <div class="nab-item" align="right">
+        <a th:text="${#authentication.getName()}"></a>
+      </div>
+      </form>
+
+      <form class="col" action="/logout" method="POST">
+        <input class="btn btn-secondary" style="background-color: darkblue" type="submit" value="Выход">
+      </form>
+    </div>
+  </div>
+</nav>
+<div class="alert alert-danger" role="alert" th:if="${alert}" th:text="${alert}" align="center"></div>
+<div class="container m-5" align="center">
+    <form class="row g-3"  action="add" method="POST">
+      <div class="col-auto">
+        <div class="input-group-prepend">
+          <span class="input-group-text mb-4">Заказчик</span>
+          <select type="text" class="form-control ml-1" name="customerID">
+            <option selected>Выберите заказчика</option>
+            <option th:each="customer: ${customers}" th:value="${customer.getPersonal_id()}"
+                    th:text="${customer.getPersonal_id()}"></option>
+          </select>
+        </div>
+      </div>
+      <div class="col-auto">
+        <div class="input-group-prepend">
+          <span class="input-group-text mb-4">Задание для</span>
+          <select type="text" class="form-control ml-1" name="workerID">
+            <option selected>Выберите сотрудника</option>
+            <option th:each="worker: ${workers}" th:value="${worker.getEmployeeId()}"
+                    th:text="${worker.getEmployeeId()}"></option>
+          </select>
+        </div>
+      </div>
+      <div class="col-auto">
+        <div class="input-group-prepend">
+          <span class="input-group-text mb-4">Цель задания</span>
+          <input type="text" class="form-control ml-1" name="goal" required>
+        </div>
+      </div>
+      <div class="col-auto">
+        <div class="input-group-prepend">
+          <span class="input-group-text mb-4">Приоритет</span>
+          <input type="text" class="form-control ml-1" name="priority" required>
+        </div>
+      </div>
+      <div class="col-auto">
+        <div class="input-group-prepend">
+          <span class="input-group-text mb-4">Дедлайн</span>
+          <input type="datetime-local" name="deadline" class="form-control ml-1" required>
+        </div>
+      </div>
+      <div class="col-auto">
+        <div class="input-group-prepend">
+          <span class="input-group-text mb-4">Номер оборудования</span>
+          <input type="text" class="form-control ml-1" name="equipmentID">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary ml-3 btn-lg">Добавить</button>
+    </form>
+</div>
+</body>
+</html>

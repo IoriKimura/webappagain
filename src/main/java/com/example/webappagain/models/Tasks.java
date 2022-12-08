@@ -4,6 +4,7 @@ package com.example.webappagain.models;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
@@ -13,6 +14,7 @@ import java.sql.Timestamp;
 @Table(name = "tasks", schema = "little_company")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Tasks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +27,16 @@ public class Tasks {
     private Timestamp creation;
     private Timestamp deadline;
     private Timestamp finaltime;
+
+    public Tasks(Long customer_id, Long author_id, Long executor_id, String goal, String priority,
+                 String deadline){
+        this.customer_id = customer_id;
+        this.author_id = author_id;
+        this.executor_id = executor_id;
+        this.goal = goal;
+        this.priority = priority;
+        this.creation = new Timestamp(System.currentTimeMillis());
+        this.deadline = Timestamp.valueOf(deadline.replace('T', ' ') + ":00");
+    }
+
 }

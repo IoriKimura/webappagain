@@ -56,6 +56,7 @@ public class TaskController {
     }
 
     @PostMapping("complete")
+    @PreAuthorize("hasAuthority('WORKER')")
     public String complete(Model model, Long taskID, Authentication auth){
         this.auth = auth;
         String workerEmail = auth.getName();
