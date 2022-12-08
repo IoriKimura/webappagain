@@ -1,9 +1,11 @@
 package com.example.webappagain.controllers;
 
 
+import com.example.webappagain.models.Contracts;
 import com.example.webappagain.models.Employee;
 import com.example.webappagain.models.Role;
 import com.example.webappagain.models.Tasks;
+import com.example.webappagain.repository.ContractRepo;
 import com.example.webappagain.repository.EmployeeRepo;
 import com.example.webappagain.repository.TasksRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class TaskController {
 
     @Autowired
     TasksRepo tRepo;
+    @Autowired
+    ContractRepo cRepo;
 
     Authentication auth;
 
@@ -93,9 +97,11 @@ public class TaskController {
         String workerEmail = auth.getName();
         Employee worker = eRepo.findByEmail(workerEmail);
         Tasks task = tRepo.findByTaskIDAuthorID(taskID, worker.getEmployeeId());
+        Contracts contract = cRepo.findByTaskId(task.getTask_id());
         if(task == null) {
             return "redirect:/tasks";
         }
+        model.addAttribute("contract", contract);
         model.addAttribute("task", task);
         return "editing";
     }
@@ -108,24 +114,29 @@ public class TaskController {
                           String goal,
                           String priority,
                          String deadline,
-                         String finaltime, Authentication auth){
+                         String finaltime,
+                         String equipmentID, Authentication auth){
         this.auth = auth;
         if(customer_id == null)
             return "redirect:/tasks";
         String workerEmail = auth.getName();
         Employee worker = eRepo.findByEmail(workerEmail);
         Tasks taskFromDb = tRepo.findByTaskIDAuthorID(task_id, worker.getEmployeeId());
+        Contracts contractsFromDb = cRepo.findByTaskId(task_id);
         taskFromDb.setCustomer_id(customer_id);
         taskFromDb.setAuthor_id(author_id);
         taskFromDb.setExecutor_id(executor_id);
         taskFromDb.setGoal(goal);
         taskFromDb.setPriority(priority);
+        if(!equipmentID.equals(contractsFromDb.getEquipment_id()))
+            contractsFromDb.setEquipment_id(equipmentID);
         if(!deadline.isEmpty()) {
             taskFromDb.setDeadline(Timestamp.valueOf(deadline.replace('T', ' ') + ":00"));
         }
         if(!finaltime.isEmpty())
             taskFromDb.setFinaltime(Timestamp.valueOf(finaltime.replace('T', ' ') + "00"));
         tRepo.save(taskFromDb);
+        cRepo.save(contractsFromDb);
         return "redirect:/tasks";
     }
 }
