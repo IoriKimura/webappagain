@@ -22,8 +22,6 @@ import java.util.List;
 @Controller
 @PreAuthorize("hasAnyAuthority('MANAGER', 'WORKER')")
 public class TaskController {
-//ToDo Сделать репазиторий с заданиям и с контрактами.
-//ToDo Проверка логина пользователя. Нахождение его в БД и доставление его индекса.
     @Autowired
     EmployeeRepo eRepo;
 
