@@ -30,4 +30,16 @@ public interface TasksRepo extends JpaRepository<Tasks, Long> {
 
     @Procedure("little_company.get_all_tasks")
     int getAllTasks(Integer ID, Timestamp startDate, Timestamp endDate);
+
+    @Procedure("little_company.get_complete_tasks_in_time")
+    int getCompleteTasksInTime(Integer ID, Timestamp startDate, Timestamp endDate);
+
+    @Procedure("little_company.get_complete_tasks_not_in_time")
+    int getCompleteTasksNoTime(Integer ID, Timestamp startDate, Timestamp endDate);
+
+    @Procedure("little_company.get_in_progress_tasks")
+    int getInProgressTasks(Integer ID, Timestamp startDate, Timestamp endDate);
+
+    @Procedure("little_company.get_uncomplete_tasks")
+    int getUncompletedTasks(Integer ID, Timestamp startDate, Timestamp endDate);
 }

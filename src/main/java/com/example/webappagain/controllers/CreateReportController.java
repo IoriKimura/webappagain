@@ -36,12 +36,24 @@ public class CreateReportController {
     public String sending(@RequestParam(name = "workerID") String workerID,
                           @RequestParam(name = "startDate") String startDate,
                           @RequestParam(name = "endDate") String endDate){
-        Integer worker = Integer.parseInt(workerID);
-        TaskReport taskReport = new TaskReport();
-        int cAllT = tRepo.getAllTasks(worker,
+        Integer ID = Integer.parseInt(workerID);
+        TaskReport tReport = new TaskReport(ID,
+                tRepo.getAllTasks(ID,
                 Timestamp.valueOf(startDate.replace('T', ' ')+":00"),
-                Timestamp.valueOf(endDate.replace('T', ' ')+":00"));
-        String json = new Gson().toJson(cAllT);
+                Timestamp.valueOf(endDate.replace('T', ' ')+":00")),
+                tRepo.getCompleteTasksInTime(ID,
+                        Timestamp.valueOf(startDate.replace('T', ' ')+":00"),
+                        Timestamp.valueOf(endDate.replace('T', ' ')+":00")),
+                tRepo.getCompleteTasksNoTime(ID,
+                        Timestamp.valueOf(startDate.replace('T', ' ')+":00"),
+                        Timestamp.valueOf(endDate.replace('T', ' ')+":00")),
+                tRepo.getInProgressTasks(ID,
+                        Timestamp.valueOf(startDate.replace('T', ' ')+":00"),
+                        Timestamp.valueOf(endDate.replace('T', ' ')+":00")),
+                tRepo.getUncompletedTasks(ID,
+                        Timestamp.valueOf(startDate.replace('T', ' ')+":00"),
+                        Timestamp.valueOf(endDate.replace('T', ' ')+":00")));
+        String json = new Gson().toJson(tReport);
         return json;
     }
 }
