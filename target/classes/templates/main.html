@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Главная страница</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script th:src="@{tasksReport.js}"></script>
 
 </head>
 <body>
@@ -26,6 +28,9 @@
                     </li>
                     <li class="nav-item" sec:authorize="hasAuthority('MANAGER')">
                         <a class="nav-link" href="/report" action="/report" methods="GET">Отчёт по сотруднику</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAuthority('MANAGER')">
+                        <a class="nav-link" onclick="tasksReport()" href="/">Отчёт по заданиям</a>
                     </li>
                 </ul>
                 <div class="nab-item" align="right">
