@@ -133,7 +133,7 @@ public class TaskController {
             taskFromDb.setDeadline(Timestamp.valueOf(deadline.replace('T', ' ') + ":00"));
         }
         if(!finaltime.isEmpty())
-            taskFromDb.setFinaltime(Timestamp.valueOf(finaltime.replace('T', ' ') + "00"));
+            taskFromDb.setFinaltime(Timestamp.valueOf(finaltime.replace('T', ' ') + ":00"));
         tRepo.save(taskFromDb);
         cRepo.save(contractsFromDb);
         return "redirect:/tasks";
